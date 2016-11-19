@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int RC_HANDLE_CAMERA_PERM = 2;
     private Camera camera;
-    private boolean isFlash;
     private Camera.Parameters param;
     private boolean isFlashOn;
 
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        isFlash = getApplicationContext().getPackageManager()
+        boolean isFlash = getApplicationContext().getPackageManager()
                 .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
         if (!isFlash){
             Log.e(TAG, "NO HAY FLASH");
@@ -55,7 +54,11 @@ public class MainActivity extends AppCompatActivity {
                 else turnOffFlash();
             }
         });
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
         int rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         if (rc == PackageManager.PERMISSION_GRANTED) {
             getCamera();
@@ -65,9 +68,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
+        if (isFlashOn) ledOn();
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (camera != null){
+            camera.release();
+            camera = null;
+        }
     }
 
     @Override
@@ -87,14 +99,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void turnOnFlash() {
         if (!isFlashOn) {
-            if (camera == null || param == null) return;
-            param.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-            camera.setParameters(param);
-            camera.startPreview();
-            isFlashOn = true;
-            Log.d(TAG, "El flash ha sido prendido ...");
+            ledOn();
         }
     }
+
+    private void ledOn() {
+        if (camera == null || param == null) return;
+        param.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        camera.setParameters(param);
+        camera.startPreview();
+        isFlashOn = true;
+        Log.d(TAG, "El flash ha sido prendido ...");
+    }
+
 
     private void turnOffFlash() {
         if (isFlashOn) {
