@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements BlankFragment.OnF
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteraction(String msg) {
 
     }
 }
