@@ -27,6 +27,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.button:
+                ((MainActivity)getActivity()).replaceFragment(BlankFragment.newInstance());
                 break;
             default:
                 break;
