@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_main"
+            android:icon="@drawable/ic_dashboard_black_24dp"
+            android:title="@string/import_menu" />
+        <item
+            android:id="@+id/nav_custom_view"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/customview" />
+        <item
+            android:id="@+id/nav_web_view"
+            android:icon="@drawable/ic_web_black_24dp"
+            android:title="@string/news" />
+    </group>
+
+    <item android:title="@string/options">
+        <menu>
+            <item
+                android:id="@+id/nav_exit"
+                android:icon="@drawable/ic_exit_to_app_black_24dp"
+                android:title="@string/exit" />
+        </menu>
+    </item>
+
+</menu>
