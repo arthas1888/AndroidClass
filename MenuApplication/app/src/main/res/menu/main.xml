@@ -9,5 +9,4 @@
         android:icon="@android:drawable/ic_lock_power_off"
         tools:ignore="AppCompatResource"
         android:visible="true" />
-
 </menu>
